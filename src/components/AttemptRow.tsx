@@ -21,8 +21,11 @@ const AttemptRow = ({rowNum}: RowProps) => {
         setWord(e.target.value)
     }
 
-    const handleEndGame = () => {
+    const handleWinGame = () => {
         alert(`Wow! You won! It took ${rowNum + 1}/${attempts} attempts`)
+    }
+    const handleLooseGame = () => {
+        alert('You lost. Sorry')
     }
 
     const handleSubmit = (e: SyntheticEvent) => {
@@ -31,7 +34,9 @@ const AttemptRow = ({rowNum}: RowProps) => {
             console.log('Submitted', word)
             dispatch(submit(word))
             if (word === answer) {
-                handleEndGame()
+                handleWinGame()
+            } else if (attempts === rowNum + 1) {
+                handleLooseGame()
             }
         }
     }
@@ -45,6 +50,10 @@ const AttemptRow = ({rowNum}: RowProps) => {
     useEffect(() => {
         !isDisabled && wordInput.current?.focus()
     }, [isDisabled])
+
+    useEffect(() => {
+        setWord('')
+    }, [answer])
 
     return (
         <form onSubmit={handleSubmit} style={{

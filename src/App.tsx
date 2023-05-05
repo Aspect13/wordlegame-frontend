@@ -30,7 +30,7 @@ const App = () => {
                 justifyContent: 'center',
                 padding: '10px 0'
             }}>
-                <input type={"text"} onChange={e => setAnswer(e.target.value)} value={answer}/>
+                <input type={"text"} onChange={e => setAnswer(e.target.value)} value={answer} style={{marginRight: '10px'}}/>
                 <input type={"number"} onChange={e => setAttempts(parseInt(e.target.value))} value={attempts}/>
             </div>
             <WordleSpace attempts={attempts}/>

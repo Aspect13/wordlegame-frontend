@@ -6,7 +6,8 @@ interface WordleState {
     activeRow: number,
     attempts: number,
     answer: string,
-    usedLetters: Array<string>
+    usedLetters: Array<string>,
+    snipedLetters: Array<string>,
 }
 
 // Define the initial state using that type
@@ -14,7 +15,8 @@ const initialState: WordleState = {
     activeRow: 0,
     attempts: 6,
     answer: '',
-    usedLetters: []
+    usedLetters: [],
+    snipedLetters: []
 }
 
 // enableMapSet()
@@ -26,11 +28,19 @@ export const wordleSlice = createSlice({
     reducers: {
         submit: (state, action: PayloadAction<string>) => {
             state.activeRow += 1
-            state.usedLetters = Array.from(new Set([...state.usedLetters, ...action.payload.toLowerCase()]))
+            const userSubmit = action.payload.toLowerCase()
+            state.usedLetters = Array.from(new Set([...state.usedLetters, ...userSubmit]))
+            const lettersInPosition: string[] = [...state.answer].filter((i: string, index: number) => {
+                return i === userSubmit.at(index) as string
+            })
+            state.snipedLetters = Array.from(new Set([...state.snipedLetters, ...lettersInPosition]))
         },
         // Use the PayloadAction type to declare the contents of `action.payload`
         changeAnswer: (state, action: PayloadAction<string>) => {
             state.answer = action.payload
+            state.activeRow = 0
+            state.usedLetters = []
+            state.snipedLetters = []
         },
         changeAttempts: (state, action: PayloadAction<number>) => {
             state.attempts = action.payload

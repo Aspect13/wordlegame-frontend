@@ -1,6 +1,3 @@
-import {useSelector} from "react-redux";
-import {RootState} from "../reducers/store";
-
 interface LetterBoxProps {
     letter: string | undefined,
     isDisabled: boolean,
@@ -29,7 +26,7 @@ const LetterBox = ({letter, isDisabled, isSubmitted, isInAnswer, isInPosition}: 
     }
 
     return (
-        <div style={{
+        <button style={{
             minWidth: '50px',
             minHeight: '50px',
             border: '1px solid black',
@@ -42,7 +39,7 @@ const LetterBox = ({letter, isDisabled, isSubmitted, isInAnswer, isInPosition}: 
             ...styleExt
         }}>
             {letter?.toUpperCase()}
-        </div>
+        </button>
     )
 }
 
